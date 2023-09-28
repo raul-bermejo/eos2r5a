@@ -48,4 +48,15 @@ jobs:
           echo "$MODEL_ID succesfully fetched and served"
           ersilia sample -n 100 -f input.csv
           ersilia api -i input.csv -o output.csv
-          ersilia close
+          
+      - name: Create zip bundle
+        run: zip -r ../${{ github.sha }}.zip .
+             
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zipped-bundle
+          path: ${{ github.sha }}.zip
+
+      - name: Close Ersilia session 
+        run: ersilia close
