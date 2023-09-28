@@ -40,13 +40,10 @@ jobs:
           echo "After conda init"
           conda init
           python -m pip install -e .[test]
-
-  predict:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+          
       - name: Predict output
         run: |
+          source activate
           echo "Sample model id selected: $MODEL_ID"
           ersilia fetch $MODEL_ID
           ersilia serve $MODEL_ID
@@ -56,6 +53,11 @@ jobs:
 
       - name: Close Ersilia session 
         run: ersilia close
+
+  upload:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
           
       - name: Create zip bundle
         run: zip -r ${{ github.sha }}.zip .
@@ -64,5 +66,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: zipped-bundle
-          path: ${{ github.sha }}.zip
+          path: output.csv
 
