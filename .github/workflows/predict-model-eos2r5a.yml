@@ -1,5 +1,5 @@
 name: Ersilia model eos2r5a output prediction
-on: workflow_dispatch                                             # allows to run workflow manually
+on: push                                         
 
 permissions:
   contents: read
