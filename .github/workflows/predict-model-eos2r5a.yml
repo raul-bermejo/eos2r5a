@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@master  # pin@v3.5.3
         with:
-          name: ersilia-os/ersilia
+          repository: ersilia-os/ersilia
 
       - name: Add conda to system path
         run: echo $CONDA/bin >> $GITHUB_PATH
