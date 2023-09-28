@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master  # pin@v3.5.3
+      - uses: actions/checkout@master
         with:
           repository: ersilia-os/ersilia
 
@@ -40,7 +40,10 @@ jobs:
           echo "After conda init"
           conda init
           python -m pip install -e .[test]
-          
+
+  predict:
+    runs-on: ubuntu-latest
+    steps:
       - name: Predict output
         run: |
           source activate
@@ -50,6 +53,9 @@ jobs:
           echo "$MODEL_ID succesfully fetched and served"
           ersilia sample -n 100 -f input.csv
           ersilia api -i input.csv -o output.csv
+
+      - name: Close Ersilia session 
+        run: ersilia close
           
       - name: Create zip bundle
         run: zip -r ${{ github.sha }}.zip .
@@ -60,5 +66,3 @@ jobs:
           name: zipped-bundle
           path: ${{ github.sha }}.zip
 
-      - name: Close Ersilia session 
-        run: ersilia close
