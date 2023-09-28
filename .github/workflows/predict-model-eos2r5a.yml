@@ -47,7 +47,6 @@ jobs:
     steps:
       - name: Predict output
         run: |
-          source activate
           echo "Sample model id selected: $MODEL_ID"
           ersilia fetch $MODEL_ID
           ersilia serve $MODEL_ID
