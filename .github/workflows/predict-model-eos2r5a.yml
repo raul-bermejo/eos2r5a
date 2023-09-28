@@ -58,10 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-          
-      - name: Create zip bundle
-        run: zip -r ${{ github.sha }}.zip .
-             
+    
       - name: Archive artifact
         uses: actions/upload-artifact@master
         with:
