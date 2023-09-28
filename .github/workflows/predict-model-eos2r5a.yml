@@ -1,5 +1,5 @@
 name: Ersilia model eos2r5a output prediction
-on: workflow_dispatch                                                  # Allows you to run this workflow manually from the Actions tab
+on: workflow_dispatch                                             # allows to run workflow manually
 
 permissions:
   contents: read
@@ -32,6 +32,7 @@ jobs:
           conda install git-lfs -c conda-forge
           git-lfs install
           conda install gh -c conda-forge
+          
       - name: Install ersilia
         run: |
           source activate
@@ -39,6 +40,7 @@ jobs:
           echo "After conda init"
           conda init
           python -m pip install -e .[test]
+          
       - name: Predict output
         run: |
           source activate
@@ -50,7 +52,7 @@ jobs:
           ersilia api -i input.csv -o output.csv
           
       - name: Create zip bundle
-        run: zip -r ../${{ github.sha }}.zip .
+        run: zip -r ${{ github.sha }}.zip .
              
       - name: Archive artifact
         uses: actions/upload-artifact@v2
