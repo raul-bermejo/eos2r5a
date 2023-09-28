@@ -6,6 +6,7 @@ permissions:
 
 env:
   MODEL_ID: eos2r5a
+  SHA: ${{ github.sha }}
 
 jobs:
   build:
@@ -49,12 +50,12 @@ jobs:
           ersilia serve $MODEL_ID
           echo "$MODEL_ID succesfully fetched and served"
           ersilia sample -n 100 -f input.csv
-          ersilia api -i input.csv -o output.csv
+          ersilia api -i input.csv -o $SHA.csv
 
       - name: Cache output
         uses: actions/cache@master
         with:
-          path: output.csv
+          path: ${{ github.sha }}.csv
           key: ${{ runner.os }}-output
 
       - name: Close Ersilia session 
@@ -68,12 +69,12 @@ jobs:
       - name: Retrieve cached output
         uses: actions/cache@master
         with:
-          path: output.csv
+          path: ${{ github.sha }}.csv
           key: ${{ runner.os }}-output
     
       - name: Archive artifact
         uses: actions/upload-artifact@master
         with:
           name: prediction-output
-          path: output.csv
+          path: ${{ github.sha }}.csv
 
