@@ -14,7 +14,6 @@ jobs:
       - uses: actions/checkout@master  # pin@v3.5.3
         with:
         name: ersilia-os/ersilia
-        ref: refs/heads/main
 
       - name: Add conda to system path
         run: echo $CONDA/bin >> $GITHUB_PATH
