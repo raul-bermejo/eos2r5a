@@ -1,11 +1,6 @@
 name: Upload model to S3
 on:
-  workflow_dispatch:
-  
-  workflow_run:
-    workflows: ["Model test on push"]
-    types:
-      - completed
+  workflow_dispatch
   
 jobs:
   upload_model_to_s3:
